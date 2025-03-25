@@ -78,6 +78,12 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'mongodb' => [
+            'driver' => 'mongodb',
+            'dsn' => env('DB_URI','mongodb://localhost:27017'),
+            'database' => env('DB_DATABASE', 'Mongo8A'),
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
