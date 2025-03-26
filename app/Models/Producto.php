@@ -2,34 +2,19 @@
 
 namespace App\Models;
 
-use MongoDB\Laravel\Auth\User as BaseMongoModel;
+use MongoDB\Laravel\Eloquent\Model;
 
-/**
- * Class Producto
- *
- *
- * @package App
- * @mixin \Illuminate\Database\Eloquent\Builder
- */
-class Producto extends BaseMongoModel 
+class Producto extends Model 
 {
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-
     protected $collection = 'productos';
 
     protected $fillable = [
         'nombre',
         'descripcion',
         'precio',
-        'cantidad',
+        'cantidad', 
         'categoria',
     ];
 
     protected $perPage = 20;
-
 }

@@ -2,15 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use MongoDB\Laravel\Eloquent\Model;
 
-/**
- * Class Cliente
- *
- *
- * @package App
- * @mixin \Illuminate\Database\Eloquent\Builder
- */
 class Cliente extends Model
 {
     
@@ -21,7 +14,14 @@ class Cliente extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'nombre',
+        'apellido',
+        'correo',
+        'telefono',
+        'direccion',
+        'id_usuario',
+    ];
 
 
 }
