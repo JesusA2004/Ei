@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CarritoRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Producto;
+use Illuminate\Support\Facades\Auth;
 
 class CarritoController extends Controller
 {
@@ -28,8 +30,9 @@ class CarritoController extends Controller
     public function create(): View
     {
         $carrito = new Carrito();
+        $productos = Producto::all();
 
-        return view('carrito.create', compact('carrito'));
+        return view('carrito.create', compact('carrito', 'productos'));
     }
 
     /**
@@ -37,7 +40,12 @@ class CarritoController extends Controller
      */
     public function store(CarritoRequest $request): RedirectResponse
     {
-        Carrito::create($request->validated());
+        Carrito::create([
+            'sesion_id'  => session()->getId(),
+            'cliente_id' => Auth::id(), // Obtiene el ID del usuario autenticado
+            'productos'  => $request->input('productos'),
+            'total'      => $request->input('total', 0),
+        ]);
 
         return Redirect::route('carritos.index')
             ->with('success', 'Carrito created successfully.');
