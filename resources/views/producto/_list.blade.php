@@ -15,7 +15,9 @@
             <tr>
                 <td>
                     @if($producto->foto)
-                        <img src="{{ asset('storage/productos/' . $producto->foto) }}" alt="{{ $producto->nombre }}" style="max-width: 80px;">
+                        <img src="{{ asset('storage/productos/' . $producto->foto) }}" 
+                             alt="{{ $producto->nombre }}" 
+                             style="max-width: 80px;">
                     @else
                         N/A
                     @endif
@@ -26,7 +28,6 @@
                 <td>{{ $producto->cantidad }}</td>
                 <td>{{ $producto->categoria }}</td>
                 <td>
-                    <!-- Botón para agregar el producto al carrito -->
                     <button type="button" class="btn btn-sm btn-success agregar-producto"
                         data-id="{{ $producto->_id }}"
                         data-nombre="{{ $producto->nombre }}"

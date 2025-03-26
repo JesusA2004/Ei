@@ -11,50 +11,79 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span id="card_title">
-                                {{ __('Carritos') }}
-                            </span>
+                            <span id="card_title">{{ __('Carritos') }}</span>
                             <div class="float-right">
-                                <a href="{{ route('carritos.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
-                                    {{ __('Generar un nuevo carrito') }}
+                                <a href="{{ route('carritos.create') }}" class="btn btn-primary btn-sm">
+                                    {{ __('Nuevo Carrito') }}
                                 </a>
                             </div>
                         </div>
                     </div>
+                    
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success m-4">
                             <p>{{ $message }}</p>
                         </div>
                     @endif
+
                     <div class="card-body bg-white">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
-                                <thead class="thead">
+                                <thead class="thead-dark">
                                     <tr>
-                                        <th>Cliente ID</th>
+                                        <th>Cliente</th>
                                         <th>Productos</th>
                                         <th>Total</th>
-                                        <th></th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($carritos as $carrito)
                                         <tr>
-                                            <td>{{ $carrito->cliente_id }}</td>
-                                            <td>{{ $carrito->productos }}</td>
-                                            <td>{{ $carrito->total }}</td>
                                             <td>
-                                                <form action="{{ route('carritos.destroy', $carrito->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary" href="{{ route('carritos.show', $carrito->id) }}">
-                                                        <i class="fa fa-fw fa-eye"></i> {{ __('Show') }}
-                                                    </a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('carritos.edit', $carrito->id) }}">
-                                                        <i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}
-                                                    </a>
+                                                @if($carrito->cliente_id)
+                                                    @php $cliente = App\Models\Cliente::find($carrito->cliente_id); @endphp
+                                                    @if($cliente)
+                                                        {{ $cliente->nombre }} {{ $cliente->apellido }}
+                                                    @else
+                                                        Cliente no encontrado
+                                                    @endif
+                                                @else
+                                                    Cliente no registrado
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($carrito->productos && is_string($carrito->productos))
+                                                    @php
+                                                        $productosCarrito = json_decode($carrito->productos, true);
+                                                    @endphp
+                                                    <ul class="list-unstyled">
+                                                        @foreach($productosCarrito as $producto)
+                                                            <li>
+                                                                {{ $producto['nombre'] ?? 'Producto desconocido' }}
+                                                                (Cantidad: {{ $producto['cantidad'] ?? 0 }})
+                                                                - ${{ number_format($producto['precio_unitario'] ?? 0, 2) }}
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @else
+                                                    Sin productos
+                                                @endif
+                                            </td>
+                                            <td>${{ number_format($carrito->total, 2) }}</td>
+                                            <td>
+                                                <form action="{{ route('carritos.destroy', $carrito->_id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="event.preventDefault(); confirm('¿Estas seguro de eliminar este carrito?') ? this.closest('form').submit() : false;">
-                                                        <i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}
+                                                    <a class="btn btn-sm btn-primary" href="{{ route('carritos.show', $carrito->_id) }}">
+                                                        <i class="fa fa-fw fa-eye"></i> {{ __('Ver') }}
+                                                    </a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('carritos.edit', $carrito->_id) }}">
+                                                        <i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}
+                                                    </a>
+                                                    <button type="submit" class="btn btn-danger btn-sm" 
+                                                        onclick="return confirm('¿Estás seguro de eliminar este carrito?')">
+                                                        <i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}
                                                     </button>
                                                 </form>
                                             </td>

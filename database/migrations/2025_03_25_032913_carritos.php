@@ -6,29 +6,31 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('carritos', function (Blueprint $coleccion) {
-            // Identificador de la sesión del cliente
-            $coleccion->string('sesion_id')->nullable();
-            $coleccion->index('cliente_id');
-
-            // Arreglo de productos en el carrito (cada objeto puede tener: id_producto, nombre, cantidad y precio_unitario)
-            $coleccion->json('productos')->nullable();
+            // Relación con usuarios admin (tabla users en MySQL)
+            $coleccion->string('user_id')->nullable()->comment('ID de usuario administrador');
             
-            // Total del carrito (opcional, para cálculos rápidos)
-            $coleccion->decimal('total', 8, 2)->default(0);
+            // Relación con clientes (colección clientes en MongoDB)
+            $coleccion->string('cliente_id')->nullable()->comment('ID de cliente registrado');
             
+            // Datos del carrito
+            $coleccion->json('productos')->nullable()->comment('Array de productos con id, nombre, cantidad y precio');
+            $coleccion->decimal('total', 10, 2)->default(0)->comment('Total calculado del carrito');
+            
+            // Timestamps
             $coleccion->timestamps();
+            
+            // Índices
+            $coleccion->index('user_id');
+            $coleccion->index('cliente_id');
+            
+            // Nota: No se usa sesion_id ya que no se permiten invitados
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('carritos');

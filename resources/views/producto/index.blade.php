@@ -31,7 +31,6 @@
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th>No.</th>
                                         <th>Foto</th>
                                         <th>Nombre</th>
                                         <th>Descripción</th>
@@ -44,7 +43,6 @@
                                 <tbody>
                                     @foreach ($productos as $index => $producto)
                                         <tr>
-                                            <td>{{ $index + 1 }}</td>
                                             <td>
                                                 @if($producto->foto)
                                                     <img src="{{ asset('storage/productos/' . $producto->foto) }}" alt="{{ $producto->nombre }}" style="max-width: 80px;">

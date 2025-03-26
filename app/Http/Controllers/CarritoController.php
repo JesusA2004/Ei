@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carrito;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use App\Http\Requests\CarritoRequest;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 use App\Models\Producto;
 use App\Models\Cliente;
+use App\Models\User;
+use Illuminate\Http\Request;
+use App\Http\Requests\CarritoRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use MongoDB\BSON\ObjectId;
 
 class CarritoController extends Controller
 {
@@ -19,10 +20,12 @@ class CarritoController extends Controller
      */
     public function index(Request $request): View
     {
-        $carritos = Carrito::paginate();
+        $carritos = Carrito::with(['user', 'cliente'])->paginate();
 
-        return view('carrito.index', compact('carritos'))
-            ->with('i', ($request->input('page', 1) - 1) * $carritos->perPage());
+        return view('carrito.index', [
+            'carritos' => $carritos,
+            'i' => ($request->input('page', 1) - 1) * $carritos->perPage()
+        ]);
     }
 
     /**
@@ -30,11 +33,15 @@ class CarritoController extends Controller
      */
     public function create(): View
     {
-        $carrito = new Carrito();
-        $productos = Producto::all();
-        $clientes = Cliente::all();
+        $currentUser = Auth::user();
 
-        return view('carrito.create', compact('carrito', 'productos', 'clientes'));
+        return view('carrito.create', [
+            'carrito' => new Carrito(),
+            'productos' => Producto::all(),
+            'clientes' => Cliente::all(),
+            'users' => User::all(),
+            'isAdmin' => $currentUser instanceof User // Verifica si es usuario admin
+        ]);
     }
 
     /**
@@ -42,15 +49,24 @@ class CarritoController extends Controller
      */
     public function store(CarritoRequest $request): RedirectResponse
     {
-        Carrito::create([
-            'sesion_id'  => Auth::id(),
-            'cliente_id' => $request->input('cliente_id'), 
-            'productos'  => $request->input('productos'),
-            'total'      => $request->input('total', 0),
-        ]);
+        $data = $request->validated();
+        $currentUser = Auth::user();
 
-        return Redirect::route('carritos.index')
-            ->with('success', 'Carrito añadido correctamente.');
+        // Asignar relación según tipo de usuario
+        if ($currentUser instanceof User) { // Usuario admin
+            $data['user_id'] = $currentUser->id;
+        } else { // Cliente
+            $data['cliente_id'] = $currentUser->id;
+        }
+
+        // Convertir productos a formato correcto
+        $data['productos'] = $this->formatProducts($data['productos']);
+        $data['total'] = $this->calculateTotal($data['productos']);
+
+        Carrito::create($data);
+
+        return redirect()->route('carritos.index')
+            ->with('success', 'Carrito creado correctamente.');
     }
 
     /**
@@ -58,7 +74,7 @@ class CarritoController extends Controller
      */
     public function show($id): View
     {
-        $carrito = Carrito::find($id);
+        $carrito = Carrito::with(['user', 'cliente', 'productos'])->findOrFail($id);
 
         return view('carrito.show', compact('carrito'));
     }
@@ -68,9 +84,16 @@ class CarritoController extends Controller
      */
     public function edit($id): View
     {
-        $carrito = Carrito::find($id);
+        $carrito = Carrito::findOrFail($id);
+        $currentUser = Auth::user();
 
-        return view('carrito.edit', compact('carrito'));
+        return view('carrito.edit', [
+            'carrito' => $carrito,
+            'productos' => Producto::all(),
+            'clientes' => Cliente::all(),
+            'users' => User::all(),
+            'isAdmin' => $currentUser instanceof User
+        ]);
     }
 
     /**
@@ -78,17 +101,62 @@ class CarritoController extends Controller
      */
     public function update(CarritoRequest $request, Carrito $carrito): RedirectResponse
     {
-        $carrito->update($request->validated());
+        $data = $request->validated();
+        $currentUser = Auth::user();
 
-        return Redirect::route('carritos.index')
+        // Mantener la relación original si no se cambia
+        if (!isset($data['user_id']) && !isset($data['cliente_id'])) {
+            if ($currentUser instanceof User) {
+                $data['user_id'] = $currentUser->id;
+            } else {
+                $data['cliente_id'] = $currentUser->id;
+            }
+        }
+
+        // Actualizar productos y total
+        $data['productos'] = $this->formatProducts($data['productos'] ?? []);
+        $data['total'] = $this->calculateTotal($data['productos']);
+
+        $carrito->update($data);
+
+        return redirect()->route('carritos.index')
             ->with('success', 'Carrito actualizado correctamente');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy($id): RedirectResponse
     {
-        Carrito::find($id)->delete();
+        $carrito = Carrito::findOrFail($id);
+        $carrito->delete();
 
-        return Redirect::route('carritos.index')
+        return redirect()->route('carritos.index')
             ->with('success', 'Carrito eliminado correctamente');
+    }
+
+    /**
+     * Formatear productos para almacenamiento
+     */
+    protected function formatProducts(array $products): array
+    {
+        return array_map(function ($product) {
+            return [
+                'id_producto' => new ObjectId($product['id']),
+                'nombre' => $product['name'],
+                'precio_unitario' => (float) $product['price'],
+                'cantidad' => (int) $product['quantity']
+            ];
+        }, $products);
+    }
+
+    /**
+     * Calcular total del carrito
+     */
+    protected function calculateTotal(array $products): float
+    {
+        return array_reduce($products, function ($total, $product) {
+            return $total + ($product['precio_unitario'] * $product['cantidad']);
+        }, 0);
     }
 }

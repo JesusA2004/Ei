@@ -14,11 +14,21 @@ class CarritoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sesion_id'  => 'nullable|string|max:255',
-            'cliente_id' => 'nullable|string|max:255',
-            // Se espera que "productos" llegue en formato JSON, si se utiliza de otra forma, se puede ajustar.
-            'productos'  => 'nullable|json',
-            'total'      => 'nullable|numeric',
+            'user_id' => 'nullable|exists:users,id',
+            'cliente_id' => 'nullable|exists:clientes,_id',
+            'productos' => 'required|array',
+            'productos.*.id' => 'required',
+            'productos.*.quantity' => 'required|integer|min:1'
         ];
     }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if (!$this->user_id && !$this->cliente_id) {
+                $validator->errors()->add('base', 'Debe asignar el carrito a un usuario o cliente');
+            }
+        });
+    }
+
 }
