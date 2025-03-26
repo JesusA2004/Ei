@@ -26,7 +26,6 @@ class ClienteRequest extends FormRequest
             'correo'    => 'required|email|unique:clientes,correo,' . $this->route('cliente'),
             'telefono'  => 'nullable|string|max:255',
             'direccion' => 'required|string',
-            'id_usuario'=> 'nullable|string|max:255',
         ];
     }
 }

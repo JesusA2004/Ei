@@ -20,10 +20,6 @@
             <label for="direccion" class="form-label">Dirección</label>
             <textarea name="direccion" id="direccion" class="form-control" rows="3" required>{{ old('direccion', $cliente->direccion ?? '') }}</textarea>
         </div>
-        <div class="mb-3">
-            <label for="id_usuario" class="form-label">ID Usuario</label>
-            <input type="text" name="id_usuario" id="id_usuario" class="form-control" value="{{ old('id_usuario', $cliente->id_usuario ?? '') }}">
-        </div>
     </div>
     <div class="col-md-12 mt20 mt-2">
         <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>

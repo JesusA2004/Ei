@@ -16,7 +16,7 @@
                             </span>
                             <div class="float-right">
                                 <a href="{{ route('clientes.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
-                                    {{ __('Create New') }}
+                                    {{ __('Añadir') }}
                                 </a>
                             </div>
                         </div>
@@ -36,7 +36,6 @@
                                         <th>Correo</th>
                                         <th>Teléfono</th>
                                         <th>Dirección</th>
-                                        <th>ID Usuario</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -48,7 +47,6 @@
                                             <td>{{ $cliente->correo }}</td>
                                             <td>{{ $cliente->telefono }}</td>
                                             <td>{{ $cliente->direccion }}</td>
-                                            <td>{{ $cliente->id_usuario }}</td>
                                             <td>
                                                 <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary" href="{{ route('clientes.show', $cliente->id) }}">
@@ -59,7 +57,7 @@
                                                     </a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="event.preventDefault(); confirm('Are you sure to delete?') ? this.closest('form').submit() : false;">
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="event.preventDefault(); confirm('¿Estas seguro de eliminar al cliente?') ? this.closest('form').submit() : false;">
                                                         <i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}
                                                     </button>
                                                 </form>

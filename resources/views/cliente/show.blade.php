@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $cliente->nombre ?? __('Show') . " " . __('Cliente') }}
+    {{ $cliente->nombre ?? __('Mostrar') . " " . __('Cliente') }}
 @endsection
 
 @section('content')
@@ -32,9 +32,6 @@
                         </div>
                         <div class="mb-3">
                             <strong>Dirección:</strong> {{ $cliente->direccion }}
-                        </div>
-                        <div class="mb-3">
-                            <strong>ID Usuario:</strong> {{ $cliente->id_usuario }}
                         </div>
                     </div>
                 </div>
