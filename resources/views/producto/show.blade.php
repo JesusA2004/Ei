@@ -10,43 +10,34 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                        <div class="float-left">
-                            <span class="card-title">{{ __('Mostrar') }} {{ $producto->nombre }}</span>
-                        </div>
-                        <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('productos.index') }}"> {{ __('Regresar') }}</a>
-                        </div>
+                        <span class="card-title">{{ __('Show') }} Producto</span>
+                        <a class="btn btn-primary btn-sm" href="{{ route('productos.index') }}">
+                            {{ __('Back') }}
+                        </a>
                     </div>
-
                     <div class="card-body bg-white">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <strong>{{ __('Nombre') }}:</strong> {{ $producto->nombre }}
-                            </div>
-                            <div class="col-md-6">
-                                <strong>{{ __('Precio') }}:</strong> {{ $producto->precio }}
-                            </div>
-                            <div class="col-md-6 mt-2">
-                                <strong>{{ __('Cantidad') }}:</strong> {{ $producto->cantidad }}
-                            </div>
-                            <div class="col-md-6 mt-2">
-                                <strong>{{ __('Categoria') }}:</strong> {{ $producto->categoria }}
-                            </div>
-                            <div class="col-md-6 mt-2">
-                                <strong>{{ __('Descripción') }}:</strong> {{ $producto->descripcion }}
-                            </div>
+                        <div class="form-group">
+                            <strong>Nombre:</strong> {{ $producto->nombre }}
                         </div>
-                        <div class="col-md-12 mt-4">
-                            <a class="btn btn-success btn-sm" href="{{ route('productos.edit', $producto->id) }}">
-                                <i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}
-                            </a>
-                            <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este producto?');">
-                                    <i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}
-                                </button>
-                            </form>
+                        <div class="form-group">
+                            <strong>Descripción:</strong> {{ $producto->descripcion }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Precio:</strong> ${{ number_format($producto->precio, 2) }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Cantidad:</strong> {{ $producto->cantidad }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Categoría:</strong> {{ $producto->categoria }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Foto:</strong>
+                            @if($producto->foto)
+                                <img src="{{ asset('storage/productos/' . $producto->foto) }}" alt="{{ $producto->nombre }}" style="max-width:200px;">
+                            @else
+                                N/A
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -20,7 +20,8 @@ class Cliente extends Model
         'correo',
         'telefono',
         'direccion',
+        'usuario',
+        'contrasena',
     ];
-
 
 }

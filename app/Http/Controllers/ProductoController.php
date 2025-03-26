@@ -11,9 +11,7 @@ use Illuminate\View\View;
 
 class ProductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request): View
     {
         $productos = Producto::paginate(20);
@@ -31,16 +29,25 @@ class ProductoController extends Controller
         return view('producto.create', compact('producto'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(ProductoRequest $request): RedirectResponse
+    public function store   (ProductoRequest $request): RedirectResponse
     {
-        Producto::create($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            // Guarda el archivo en storage/app/public/productos
+            $file->storeAs('public/productos', $filename);
+            // Solo se almacena el nombre del archivo en MongoDB
+            $data['foto'] = $filename;
+        }
+
+        Producto::create($data);
 
         return Redirect::route('productos.index')
             ->with('success', 'Producto created successfully.');
     }
+
 
     /**
      * Display the specified resource.

@@ -12,8 +12,9 @@ class Producto extends Model
         'nombre',
         'descripcion',
         'precio',
-        'cantidad', 
+        'cantidad',
         'categoria',
+        'foto', // se guarda el nombre del archivo
     ];
 
     protected $perPage = 20;

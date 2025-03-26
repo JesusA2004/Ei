@@ -17,7 +17,8 @@ return new class extends Migration
             $coleccion->string('correo')->unique(); // Esto ya crea el índice
             $coleccion->string('telefono')->nullable();
             $coleccion->text('direccion');
-            $coleccion->string('id_usuario')->nullable();
+            $coleccion->text('usuario');
+            $coleccion->text('contrasena');
             $coleccion->timestamps();
         });        
     }

@@ -1,38 +1,46 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $cliente->nombre ?? __('Mostrar') . " " . __('Cliente') }}
+    {{ $cliente->nombre ?? __('Show') . " " . __('Cliente') }}
 @endsection
 
 @section('content')
     <section class="content container-fluid">
-        <div class="row">
+        <div class="row padding-1 p-1">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                        <div class="float-left">
-                            <span class="card-title">{{ __('Mostrar') }} Cliente</span>
-                        </div>
-                        <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('clientes.index') }}"> {{ __('Regresar') }}</a>
-                        </div>
+                        <span class="card-title">{{ __('Show') }} Cliente</span>
+                        <a class="btn btn-primary btn-sm" href="{{ route('clientes.index') }}">
+                            {{ __('Back') }}
+                        </a>
                     </div>
                     <div class="card-body bg-white">
-                        <div class="mb-3">
-                            <strong>Nombre:</strong> {{ $cliente->nombre }}
+                        <div class="form-group">
+                            <strong>Nombre:</strong>
+                            {{ $cliente->nombre }}
                         </div>
-                        <div class="mb-3">
-                            <strong>Apellido:</strong> {{ $cliente->apellido }}
+                        <div class="form-group">
+                            <strong>Apellido:</strong>
+                            {{ $cliente->apellido }}
                         </div>
-                        <div class="mb-3">
-                            <strong>Correo:</strong> {{ $cliente->correo }}
+                        <div class="form-group">
+                            <strong>Correo:</strong>
+                            {{ $cliente->correo }}
                         </div>
-                        <div class="mb-3">
-                            <strong>Teléfono:</strong> {{ $cliente->telefono }}
+                        <div class="form-group">
+                            <strong>Teléfono:</strong>
+                            {{ $cliente->telefono }}
                         </div>
-                        <div class="mb-3">
-                            <strong>Dirección:</strong> {{ $cliente->direccion }}
+                        <div class="form-group">
+                            <strong>Dirección:</strong>
+                            {{ $cliente->direccion }}
                         </div>
+                        <div class="form-group">
+                            <strong>Usuario:</strong>
+                            {{ $cliente->usuario }}
+                        </div>
+                        <!-- Por seguridad, usualmente no se muestra la contraseña -->
                     </div>
                 </div>
             </div>

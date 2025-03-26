@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" name="nombre" id="nombre" class="form-control" 
+            <input type="text" name="nombre" id="nombre" class="form-control"
                    value="{{ old('nombre', $producto->nombre ?? '') }}" required>
         </div>
         <div class="mb-3">
@@ -11,21 +11,30 @@
         </div>
         <div class="mb-3">
             <label for="precio" class="form-label">Precio</label>
-            <input type="number" step="0.01" name="precio" id="precio" class="form-control" 
+            <input type="number" step="0.01" name="precio" id="precio" class="form-control"
                    value="{{ old('precio', $producto->precio ?? '') }}" required>
         </div>
         <div class="mb-3">
             <label for="cantidad" class="form-label">Cantidad</label>
-            <input type="number" name="cantidad" id="cantidad" class="form-control" 
+            <input type="number" name="cantidad" id="cantidad" class="form-control"
                    value="{{ old('cantidad', $producto->cantidad ?? '') }}" required>
         </div>
         <div class="mb-3">
             <label for="categoria" class="form-label">Categoría</label>
-            <input type="text" name="categoria" id="categoria" class="form-control" 
+            <input type="text" name="categoria" id="categoria" class="form-control"
                    value="{{ old('categoria', $producto->categoria ?? '') }}" required>
         </div>
+        <div class="mb-3">
+            <label for="foto" class="form-label">Foto</label>
+            <input type="file" name="foto" id="foto" class="form-control" accept="image/*">
+            @if(isset($producto) && $producto->foto)
+                <div class="mt-2">
+                    <img src="{{ asset('storage/productos/' . $producto->foto) }}" alt="Foto de {{ $producto->nombre }}" style="max-width: 200px;">
+                </div>
+            @endif
+        </div>
     </div>
-    <div class="col-md-12 mt20 mt-2">
+    <div class="col-md-12 mt-2">
         <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
     </div>
 </div>

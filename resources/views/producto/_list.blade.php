@@ -1,6 +1,7 @@
 <table class="table table-striped table-hover">
     <thead class="thead">
         <tr>
+            <th>Foto</th>
             <th>Nombre</th>
             <th>Descripción</th>
             <th>Precio</th>
@@ -12,6 +13,13 @@
     <tbody>
         @foreach ($productos as $producto)
             <tr>
+                <td>
+                    @if($producto->foto)
+                        <img src="{{ asset('storage/productos/' . $producto->foto) }}" alt="{{ $producto->nombre }}" style="max-width: 80px;">
+                    @else
+                        N/A
+                    @endif
+                </td>
                 <td>{{ $producto->nombre }}</td>
                 <td>{{ $producto->descripcion }}</td>
                 <td>{{ $producto->precio }}</td>

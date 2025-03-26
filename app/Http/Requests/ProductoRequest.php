@@ -6,9 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProductoRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+
     public function authorize(): bool
     {
         return true;
@@ -22,11 +20,12 @@ class ProductoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre'      => 'required|string|max:255',
-            'descripcion' => 'required|string',
-            'precio'      => 'required|numeric',
-            'cantidad'    => 'required|integer',
-            'categoria'   => 'required|string|max:255',
+            'nombre'       => 'required|string|max:255',
+            'descripcion'  => 'required|string',
+            'precio'       => 'required|numeric',
+            'cantidad'     => 'required|integer',
+            'categoria'    => 'required|string|max:255',
+            'foto'         => 'nullable|image|max:2048', // opcional, imagen y máximo 2MB
         ];
     }
 }
