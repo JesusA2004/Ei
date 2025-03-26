@@ -4,13 +4,6 @@ namespace App\Models;
 
 use MongoDB\Laravel\Eloquent\Model;
 
-/**
- * Class Pedido
- *
- *
- * @package App
- * @mixin \Illuminate\Database\Eloquent\Builder
- */
 class Pedido extends Model
 {
     
@@ -21,7 +14,13 @@ class Pedido extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [];
-
+    protected $fillable = [
+        'cliente_id',
+        'total',
+        'estado',
+        'items',
+        'envio',
+        'pago',
+    ];
 
 }
