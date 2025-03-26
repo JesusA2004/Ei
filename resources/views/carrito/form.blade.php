@@ -1,25 +1,30 @@
 <div class="row padding-1 p-1">
     <div class="col-md-12">
+        <!-- Campo oculto para el ID del usuario autenticado -->
+        <input type="hidden" name="sesion_id" id="sesion_id" value="{{ Auth::id() }}">
+
+        <!-- Seleccionar cliente -->
         <div class="mb-3">
-            <label for="sesion_id" class="form-label">Sesión ID</label>
-            <input type="text" name="sesion_id" id="sesion_id" class="form-control" value="{{ old('sesion_id', $carrito->sesion_id ?? '') }}">
+            <label for="cliente_id" class="form-label">Cliente</label>
+            <select name="cliente_id" id="cliente_id" class="form-control" required>
+                <option value="">Seleccione un cliente</option>
+                @foreach($clientes as $cliente)
+                    <option value="{{ $cliente->id }}">{{ $cliente->nombre }} {{ $cliente->apellido }}</option>
+                @endforeach
+            </select>
         </div>
-        <div class="mb-3">
-            <label for="cliente_id" class="form-label">Cliente ID</label>
-            <input type="text" name="cliente_id" id="cliente_id" class="form-control" value="{{ old('cliente_id', $carrito->cliente_id ?? '') }}">
-        </div>
-        
+
         <!-- Aquí se incluye la lista de productos -->
         @include('producto._list', ['productos' => $productos])
-        
-        <!-- Campo oculto para almacenar el JSON de productos agregados -->
+
+        <!-- Campo oculto para almacenar los productos agregados -->
         <input type="hidden" name="productos" id="productos" value="[]">
-        
-        <!-- Sección para listar los productos agregados -->
+
+        <!-- Sección para mostrar los productos agregados -->
         <div id="lista-productos-agregados"></div>
     </div>
     <div class="col-md-12 mt20 mt-2">
-        <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
+        <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
     </div>
 </div>
 
@@ -32,7 +37,8 @@
             const lista = document.getElementById('lista-productos-agregados');
             lista.innerHTML = '';
             productosAgregados.forEach((item, index) => {
-                lista.innerHTML += `<p>${item.nombre} - Cantidad: ${item.cantidad} <button type="button" onclick="eliminarProducto(${index})">Eliminar</button></p>`;
+                lista.innerHTML += `<p>${item.nombre} - Cantidad: ${item.cantidad} 
+                    <button type="button" onclick="eliminarProducto(${index})">Eliminar</button></p>`;
             });
             document.getElementById('productos').value = JSON.stringify(productosAgregados);
         }

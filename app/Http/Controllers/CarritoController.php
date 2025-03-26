@@ -9,6 +9,7 @@ use App\Http\Requests\CarritoRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Producto;
+use App\Models\Cliente;
 use Illuminate\Support\Facades\Auth;
 
 class CarritoController extends Controller
@@ -31,8 +32,9 @@ class CarritoController extends Controller
     {
         $carrito = new Carrito();
         $productos = Producto::all();
+        $clientes = Cliente::all();
 
-        return view('carrito.create', compact('carrito', 'productos'));
+        return view('carrito.create', compact('carrito', 'productos', 'clientes'));
     }
 
     /**
@@ -41,14 +43,14 @@ class CarritoController extends Controller
     public function store(CarritoRequest $request): RedirectResponse
     {
         Carrito::create([
-            'sesion_id'  => session()->getId(),
-            'cliente_id' => Auth::id(), // Obtiene el ID del usuario autenticado
+            'sesion_id'  => Auth::id(),
+            'cliente_id' => $request->input('cliente_id'), 
             'productos'  => $request->input('productos'),
             'total'      => $request->input('total', 0),
         ]);
 
         return Redirect::route('carritos.index')
-            ->with('success', 'Carrito created successfully.');
+            ->with('success', 'Carrito añadido correctamente.');
     }
 
     /**
@@ -79,7 +81,7 @@ class CarritoController extends Controller
         $carrito->update($request->validated());
 
         return Redirect::route('carritos.index')
-            ->with('success', 'Carrito updated successfully');
+            ->with('success', 'Carrito actualizado correctamente');
     }
 
     public function destroy($id): RedirectResponse
@@ -87,6 +89,6 @@ class CarritoController extends Controller
         Carrito::find($id)->delete();
 
         return Redirect::route('carritos.index')
-            ->with('success', 'Carrito deleted successfully');
+            ->with('success', 'Carrito eliminado correctamente');
     }
 }

@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('carritos', function (Blueprint $coleccion) {
             // Identificador de la sesión del cliente
             $coleccion->string('sesion_id')->nullable();
-            // Identificador del cliente (almacenado como cadena)
-            $coleccion->string('cliente_id')->nullable();
             $coleccion->index('cliente_id');
 
             // Arreglo de productos en el carrito (cada objeto puede tener: id_producto, nombre, cantidad y precio_unitario)

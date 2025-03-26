@@ -31,7 +31,6 @@
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
-                                        <th>Sesión ID</th>
                                         <th>Cliente ID</th>
                                         <th>Productos</th>
                                         <th>Total</th>
@@ -41,7 +40,6 @@
                                 <tbody>
                                     @foreach ($carritos as $carrito)
                                         <tr>
-                                            <td>{{ $carrito->sesion_id }}</td>
                                             <td>{{ $carrito->cliente_id }}</td>
                                             <td>{{ $carrito->productos }}</td>
                                             <td>{{ $carrito->total }}</td>
