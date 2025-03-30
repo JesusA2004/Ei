@@ -15,6 +15,9 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    @yield('styles')
+    
 </head>
 <body>
     <div id="app">
@@ -72,7 +75,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py">
             @yield('content')
         </main>
     </div>

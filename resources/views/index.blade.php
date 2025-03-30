@@ -28,9 +28,9 @@
 @endsection
 
 @section('styles')
-<link href="{{ asset('css/index.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/index.css') }}" rel="stylesheet">
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('js/index.js') }}"></script>
 @endsection

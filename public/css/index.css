@@ -1,67 +1,175 @@
+/* Sección principal con imagen de fondo y overlay animado */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Evita cualquier desplazamiento horizontal inesperado */
+}
+
 .personal-care-section {
-    background-image: url('/images/background.jpg');
+    position: relative;
+    background-image: url('/storage/images/background.png');
     background-size: cover;
     background-position: center;
-    padding: 100px 0;
+    padding: 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
+    overflow: hidden;
 }
 
+/* Overlay animado con efecto pulso */
+.personal-care-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    animation: pulseOverlay 10s infinite alternate;
+    z-index: 1;
+}
+
+/* Keyframes para el overlay */
+@keyframes pulseOverlay {
+    from {
+        background: rgba(0, 0, 0, 0.4);
+    }
+    to {
+        background: rgba(0, 0, 0, 0.6);
+    }
+}
+
+/* Contenedor de contenido para asegurar su visibilidad */
+.personal-care-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Título animado */
 .section-title {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #2c3e50;
+    color: #fff;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 1.5rem !important;
+    animation: fadeInDown 1s ease forwards;
+    opacity: 0;
 }
 
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tagline animado */
 .section-tagline {
     font-size: 1.2rem;
-    color: #7f8c8d;
+    color: #ddd;
     line-height: 1.6;
+    animation: fadeInUp 1s ease forwards;
+    opacity: 0;
+    animation-delay: 0.5s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Botones con efectos hover */
+.btn-custom-primary,
+.btn-custom-secondary {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
 }
 
 .btn-custom-primary {
     background-color: #8e44ad;
-    color: white;
-    padding: 12px 30px;
-    border-radius: 25px;
-    font-weight: 500;
-    transition: all 0.3s;
+    color: #fff;
+}
+
+.btn-custom-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(142, 68, 173, 0.4);
 }
 
 .btn-custom-secondary {
     background-color: #3498db;
-    color: white;
-    padding: 12px 30px;
-    border-radius: 25px;
-    font-weight: 500;
-    transition: all 0.3s;
+    color: #fff;
+    margin-left: 10px;
 }
 
+.btn-custom-secondary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(52, 152, 219, 0.4);
+}
+
+/* Contenedor de búsqueda con animación */
 .search-container {
     margin-top: 30px;
     max-width: 400px;
     margin-left: auto;
     margin-right: auto;
+    animation: fadeIn 1s ease forwards;
+    opacity: 0;
+    animation-delay: 1s;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Input de búsqueda con efecto focus */
 .search-input {
     border-radius: 25px;
     padding: 12px 20px;
     border: 2px solid #8e44ad;
+    transition: border-color 0.3s ease;
 }
 
+.search-input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Botón de búsqueda con hover */
 .btn-search {
     background-color: #8e44ad;
     color: white;
     border-radius: 0 25px 25px 0;
-    border-left: none;
+    border: none;
     padding: 0 20px;
+    transition: background-color 0.3s ease;
 }
 
+.btn-search:hover {
+    background-color: #6c2c8a;
+}
+
+/* Ajustes para dispositivos móviles */
 @media (max-width: 768px) {
     .section-title {
         font-size: 2rem;
@@ -75,5 +183,6 @@
     .btn-custom-secondary {
         width: 100%;
         max-width: 250px;
+        margin: 5px 0;
     }
 }
