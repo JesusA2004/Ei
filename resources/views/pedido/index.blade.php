@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.barraL')
 
 @section('template_title')
     Pedidos
 @endsection
 
-@section('content')
+@section('panel-content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">

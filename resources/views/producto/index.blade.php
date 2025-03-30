@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.barraL')
 
 @section('template_title')
     Productos
 @endsection
 
-@section('content')
+@section('panel-content')
     <div class="container-fluid">
         <div class="row padding-1 p-1">
             <div class="col-sm-12">
@@ -14,7 +14,7 @@
                             <span id="card_title">{{ __('Productos') }}</span>
                             <div class="float-right">
                                 <a href="{{ route('productos.create') }}" class="btn btn-primary btn-sm">
-                                    {{ __('Create New') }}
+                                    {{ __('Añadir producto') }}
                                 </a>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                                 @if($producto->foto)
                                                     <img src="{{ asset('storage/productos/' . $producto->foto) }}" alt="{{ $producto->nombre }}" style="max-width: 80px;">
                                                 @else
-                                                    N/A
+                                                    Sin productos en inventario
                                                 @endif
                                             </td>
                                             <td>{{ $producto->nombre }}</td>
@@ -58,15 +58,15 @@
                                             <td>
                                                 <form action="{{ route('productos.destroy', $producto->_id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary" href="{{ route('productos.show', $producto->_id) }}">
-                                                        <i class="fa fa-fw fa-eye"></i> {{ __('Show') }}
+                                                        <i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}
                                                     </a>
                                                     <a class="btn btn-sm btn-success" href="{{ route('productos.edit', $producto->_id) }}">
-                                                        <i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}
+                                                        <i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}
                                                     </a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este producto?');">
-                                                        <i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}
+                                                        <i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}
                                                     </button>
                                                 </form>
                                             </td>

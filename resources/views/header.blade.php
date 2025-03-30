@@ -1,23 +1,13 @@
-@section('content')
-<link href="{{ asset('css/template.css') }}" rel="stylesheet" />
-<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-
-<!-- Navbar superior -->
+<!-- Top Navbar -->
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand -->
-    <a class="navbar-brand ps-3" href="{{ url('/home') }}">Start Bootstrap</a>
+    <a class="navbar-brand ps-3" href="{{ url('/home') }}">Saras Secret</a>
     <!-- Sidebar Toggle-->
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle">
         <i class="fa-solid fa-bars"></i>
-    </button>    
-    <!-- Navbar Search -->
-    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-        <div class="input-group">
-            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
+    </button>
+    <!-- Navbar Search (No habilitada)-->
+    <form class="d-none d-md-inline-block form-inline ms-auto me-md-3 my-2 my-md-0">
     </form>
     <!-- Navbar User -->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -27,13 +17,13 @@
                 <i class="fas fa-user fa-fw"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">Settings</a></li>
+                <li><a class="dropdown-item" href="#!">Configuraciones</a></li>
                 <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
                     <a class="dropdown-item" href="#!"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Logout
+                        Cerrar sesión
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
@@ -44,37 +34,54 @@
     </ul>
 </nav>
 
+<!-- Contenedor del Sidebar y Panel de Contenido -->
 <div id="layoutSidenav">
-    <!-- Barra lateral (sidebar) -->
+    <!-- Sidebar (ubicado a la izquierda) -->
     <div id="layoutSidenav_nav">
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
-                    <!-- Sección: Core -->
-                    <div class="sb-sidenav-menu-heading">Core</div>
+                    <!-- Sección: Páginas -->
+                    <div class="sb-sidenav-menu-heading">Páginas</div>
                     <a class="nav-link" href="{{ url('/home') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </a>
-                    <!-- Sección: Interface -->
-                    <div class="sb-sidenav-menu-heading">Interface</div>
+                    <a class="nav-link" href="{{ url('/clientes') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                        Clientes
+                    </a>
+                    <a class="nav-link" href="{{ url('/productos') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-box-open"></i></div>
+                        Inventario
+                    </a>
+                    <a class="nav-link" href="{{ url('/carritos') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
+                        Ventas
+                    </a>
+                    <a class="nav-link" href="{{ url('/pedidos') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-truck"></i></div>
+                        Envios
+                    </a>
+                    <!-- Sección: Perfil -->
+                    <div class="sb-sidenav-menu-heading">Perfil</div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
                        aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                        Layouts
+                        <div class="sb-nav-link-icon"><i class="fas fa-user-cog"></i></div>
+                        Sesión
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="#!">Static Navigation</a>
-                            <a class="nav-link" href="#!">Light Sidenav</a>
+                            <a class="nav-link" href="#!">Cambiar contraseña</a>
+                            <a class="nav-link" href="#!">Cerrar sesión</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
                        aria-expanded="false" aria-controls="collapsePages">
-                        <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                        Pages
+                        <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
+                        Reportes
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
@@ -82,41 +89,28 @@
                         <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                                data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                Authentication
+                                Ventas
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne"
                                  data-bs-parent="#sidenavAccordionPages">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#!">Login</a>
-                                    <a class="nav-link" href="#!">Register</a>
-                                    <a class="nav-link" href="#!">Forgot Password</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                               data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                Error
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne"
-                                 data-bs-parent="#sidenavAccordionPages">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#!">401 Page</a>
-                                    <a class="nav-link" href="#!">404 Page</a>
-                                    <a class="nav-link" href="#!">500 Page</a>
+                                    <a class="nav-link" href="#!">Diarias</a>
+                                    <a class="nav-link" href="#!">Semanales</a>
+                                    <a class="nav-link" href="#!">Mensuales</a>
                                 </nav>
                             </div>
                         </nav>
                     </div>
-                    <!-- Sección: Addons -->
-                    <div class="sb-sidenav-menu-heading">Addons</div>
+                    <!-- Sección: Adicionales -->
+                    <div class="sb-sidenav-menu-heading">Adicionales</div>
                     <a class="nav-link" href="#!">
-                        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                        Charts
+                        <div class="sb-nav-link-icon"><i class="fas fa-database"></i></div>
+                        Respaldo de base de datos
                     </a>
                     <a class="nav-link" href="#!">
-                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Tables
+                        <div class="sb-nav-link-icon"><i class="fas fa-history"></i></div>
+                        Restauración de base de datos
                     </a>
                 </div>
             </div>
@@ -126,152 +120,9 @@
             </div>
         </nav>
     </div>
-
-    <!-- Contenido principal del Dashboard -->
+    <!-- Aquí termina el Sidebar; el panel de contenido se renderizará en el div siguiente -->
     <div id="layoutSidenav_content">
-        <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">Dashboard</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">Dashboard</li>
-                </ol>
-
-                <!-- Tarjetas de resumen -->
-                <div class="row">
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">Primary Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">Warning Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-success text-white mb-4">
-                            <div class="card-body">Success Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-danger text-white mb-4">
-                            <div class="card-body">Danger Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Gráficas -->
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-area me-1"></i>
-                                Area Chart Example
-                            </div>
-                            <div class="card-body">
-                                <canvas id="myAreaChart" width="100%" height="40"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-bar me-1"></i>
-                                Bar Chart Example
-                            </div>
-                            <div class="card-body">
-                                <canvas id="myBarChart" width="100%" height="40"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tabla de datos -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
-                        DataTable Example
-                    </div>
-                    <div class="card-body">
-                        <table id="datatablesSimple" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                </tr>
-                                <tr>
-                                    <td>Donna Snider</td>
-                                    <td>Customer Support</td>
-                                    <td>New York</td>
-                                    <td>27</td>
-                                    <td>2011/01/25</td>
-                                    <td>$112,000</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="py-4 bg-light mt-auto">
-            <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">
-                        Copyright &copy; Your Website
-                        {{ \Carbon\Carbon::now()->format('Y') }}
-                    </div>
-                    <div>
-                        <a href="#">Privacy Policy</a>
-                        &middot;
-                        <a href="#">Terms &amp; Conditions</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        @yield('panel-content')
     </div>
 </div>
-@endsection
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        
-<script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
-        
-<script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
-        
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        
-<script src="{{ asset('js/datatables-simple-demo.js') }}"></script>

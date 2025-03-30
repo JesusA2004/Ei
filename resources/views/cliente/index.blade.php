@@ -1,10 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.barraL')
 
 @section('template_title')
     Clientes
 @endsection
 
-@section('content')
+@section('panel-content')
+
     <div class="container-fluid">
         <div class="row padding-1 p-1">
             <div class="col-sm-12">
@@ -14,7 +15,7 @@
                             <span id="card_title">{{ __('Clientes') }}</span>
                             <div class="float-right">
                                 <a href="{{ route('clientes.create') }}" class="btn btn-primary btn-sm">
-                                    {{ __('Register New Cliente') }}
+                                    {{ __('Registrar Cliente') }}
                                 </a>
                             </div>
                         </div>
@@ -47,12 +48,12 @@
                                             <td>{{ $cliente->usuario }}</td>
                                             <td>
                                                 <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary" href="{{ route('clientes.show', $cliente->id) }}">{{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('clientes.edit', $cliente->id) }}">{{ __('Edit') }}</a>
+                                                    <a class="btn btn-sm btn-primary" href="{{ route('clientes.show', $cliente->id) }}">{{ __('Mostrar') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('clientes.edit', $cliente->id) }}">{{ __('Editar') }}</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este cliente?');">
-                                                        {{ __('Delete') }}
+                                                        {{ __('Eliminar') }}
                                                     </button>
                                                 </form>
                                             </td>
@@ -68,3 +69,5 @@
         </div>
     </div>
 @endsection
+
+<script src="{{ asset('js/scripts.js') }}"></script>

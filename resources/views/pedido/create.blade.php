@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.barraL')
 
 @section('template_title')
     {{ __('Create') }} Pedido
 @endsection
 
-@section('content')
+@section('panel-content')
     <section class="content container-fluid">
         <div class="row">
             <div class="col-md-12">

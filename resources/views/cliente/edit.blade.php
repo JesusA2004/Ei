@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.barraL')
 
 @section('template_title')
     {{ __('Update') }} Cliente
 @endsection
 
-@section('content')
+@section('panel-content')
     <section class="content container-fluid">
         <div class="row padding-1 p-1">
             <div class="col-md-12">

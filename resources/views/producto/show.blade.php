@@ -1,18 +1,18 @@
-@extends('layouts.app')
+@extends('layouts.barraL')
 
 @section('template_title')
     {{ $producto->nombre ?? __('Show') . " " . __('Producto') }}
 @endsection
 
-@section('content')
+@section('panel-content')
     <section class="content container-fluid">
         <div class="row padding-1 p-1">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                        <span class="card-title">{{ __('Show') }} Producto</span>
+                        <span class="card-title">{{ __('Mostrar') }} Producto</span>
                         <a class="btn btn-primary btn-sm" href="{{ route('productos.index') }}">
-                            {{ __('Back') }}
+                            {{ __('Regresar') }}
                         </a>
                     </div>
                     <div class="card-body bg-white">
