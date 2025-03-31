@@ -63,6 +63,10 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-truck"></i></div>
                         Envios
                     </a>
+                    <a class="nav-link" href="{{ url('/products') }}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-truck"></i></div>
+                        Api FakeStore
+                    </a>
                     <!-- Sección: Perfil -->
                     <div class="sb-sidenav-menu-heading">Perfil</div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"

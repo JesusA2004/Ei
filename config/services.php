@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'fakestoreapi' => [
+        'base_url' => env('FAKESTOREAPI_BASE_URL', 'https://fakestoreapi.com'),
+    ],
+
 ];

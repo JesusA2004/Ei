@@ -22,3 +22,5 @@ Route::resource('clientes', App\Http\Controllers\ClienteController::class)->midd
 Route::resource('carritos', App\Http\Controllers\CarritoController::class)->middleware('auth');
 
 Route::resource('pedidos', App\Http\Controllers\PedidoController::class)->middleware('auth');
+
+Route::resource('products', App\Http\Controllers\ProductController::class)->middleware('auth');
