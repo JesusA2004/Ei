@@ -6,14 +6,14 @@
 
 @section('panel-content')
     <div class="container-fluid">
-        <div class="row padding-1 p-1">
+        <div class="row p-3">
             <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span id="card_title">{{ __('Productos') }}</span>
-                            <div class="float-right">
-                                <a href="{{ route('productos.create') }}" class="btn btn-primary btn-sm">
+                <div class="card shadow-sm">
+                    <div class="card-header" style="background-color: #FFF9F0; border: 1px solid #97ACBA;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span id="card_title" style="color: #404E5E; font-weight: bold;">{{ __('Productos') }}</span>
+                            <div>
+                                <a href="{{ route('productos.create') }}" class="btn btn-sm" style="background-color: #5D8EC6; color: #ffffff; border-color: #5D8EC6;">
                                     {{ __('Añadir producto') }}
                                 </a>
                             </div>
@@ -26,11 +26,11 @@
                         </div>
                     @endif
                     
-                    <div class="card-body bg-white">
+                    <div class="card-body" style="background-color: #FFF9F0; border: 1px solid #97ACBA;">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead>
-                                    <tr>
+                                    <tr style="color: #404E5E;">
                                         <th>Foto</th>
                                         <th>Nombre</th>
                                         <th>Descripción</th>
@@ -45,9 +45,9 @@
                                         <tr>
                                             <td>
                                                 @if($producto->foto)
-                                                    <img src="{{ asset('storage/productos/' . $producto->foto) }}" alt="{{ $producto->nombre }}" style="max-width: 80px;">
+                                                    <img src="{{ asset('storage/productos/' . $producto->foto) }}" alt="{{ $producto->nombre }}" class="img-fluid" style="max-width: 80px;">
                                                 @else
-                                                    Sin productos en inventario
+                                                    <span style="color: #404E5E;">Sin productos en inventario</span>
                                                 @endif
                                             </td>
                                             <td>{{ $producto->nombre }}</td>
@@ -57,15 +57,15 @@
                                             <td>{{ $producto->categoria }}</td>
                                             <td>
                                                 <form action="{{ route('productos.destroy', $producto->_id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary" href="{{ route('productos.show', $producto->_id) }}">
+                                                    <a class="btn btn-sm" style="background-color: #5D8EC6; color: #ffffff; border-color: #5D8EC6;" href="{{ route('productos.show', $producto->_id) }}">
                                                         <i class="fa fa-fw fa-eye"></i> {{ __('Mostrar') }}
                                                     </a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('productos.edit', $producto->_id) }}">
+                                                    <a class="btn btn-sm" style="background-color: #5D8EC6; color: #ffffff; border-color: #5D8EC6;" href="{{ route('productos.edit', $producto->_id) }}">
                                                         <i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}
                                                     </a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este producto?');">
+                                                    <button type="submit" class="btn btn-sm" style="background-color: #DFD3CC; color: #404E5E; border: 1px solid #97ACBA;" onclick="return confirm('¿Estás seguro de eliminar este producto?');">
                                                         <i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}
                                                     </button>
                                                 </form>

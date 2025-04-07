@@ -1,30 +1,37 @@
 @extends('layouts.barraL')
 
 @section('template_title')
-    {{ __('Update') }} Cliente
+    Editar Cliente
 @endsection
 
 @section('panel-content')
-    <section class="content container-fluid">
-        <div class="row padding-1 p-1">
-            <div class="col-md-12">
-                <div class="card card-default">
-                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                        <span class="card-title">{{ __('Update') }} Cliente</span>
-                        <a class="btn btn-primary btn-sm" href="{{ route('clientes.index') }}">
-                            {{ __('Back') }}
-                        </a>
+    <div class="container-fluid">
+        <div class="row p-3">
+            <div class="col-sm-12">
+                <div class="card shadow-sm">
+                    <!-- Encabezado con título y botón de regresar -->
+                    <div class="card-header" style="background-color: #FFF9F0; border: 1px solid #97ACBA;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span id="card_title" style="color: #404E5E; font-weight: bold;">{{ __('Editar Cliente') }}</span>
+                            <div>
+                                <a href="{{ route('clientes.index') }}" class="btn btn-sm" 
+                                   style="background-color: #5D8EC6; color: #ffffff; border-color: #5D8EC6;">
+                                    {{ __('Regresar') }}
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body bg-white">
-                        <form method="POST" action="{{ route('clientes.update', $cliente->id) }}" role="form" enctype="multipart/form-data">
+
+                    <!-- Cuerpo de la tarjeta: formulario -->
+                    <div class="card-body" style="background-color: #FFF9F0; border: 1px solid #97ACBA;">
+                        <form method="POST" action="{{ route('clientes.update', $cliente->id) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
-
                             @include('cliente.form')
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 @endsection

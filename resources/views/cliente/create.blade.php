@@ -1,14 +1,23 @@
 @extends('layouts.barraL')
 
+@section('template_title')
+    Crear Cliente
+@endsection
+
 @section('panel-content')
-    <section class="content container-fluid">
-        <div class="row padding-1 p-1">
-            <div class="col-md-12">
-                <div class="card card-default" style="border-color: #404E5E;">
-                    <div class="card-header" style="background-color: #5D8EC6; color: #ffffff;">
-                        <span class="card-title">Registrar cliente</span>
+    <div class="container-fluid">
+        <div class="row p-3">
+            <div class="col-sm-12">
+                <div class="card shadow-sm">
+                    <!-- Encabezado con título -->
+                    <div class="card-header" style="background-color: #FFF9F0; border: 1px solid #97ACBA;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span id="card_title" style="color: #404E5E; font-weight: bold;">{{ __('Crear Cliente') }}</span>
+                        </div>
                     </div>
-                    <div class="card-body" style="background-color: #F9EFE6;">
+
+                    <!-- Cuerpo de la tarjeta: formulario -->
+                    <div class="card-body" style="background-color: #FFF9F0; border: 1px solid #97ACBA;">
                         <form method="POST" action="{{ route('clientes.store') }}" enctype="multipart/form-data">
                             @csrf
                             @include('cliente.form')
@@ -17,5 +26,5 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 @endsection
