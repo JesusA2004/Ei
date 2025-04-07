@@ -1,0 +1,127 @@
+/* dashboard.css */
+
+/* Variables de color pastel */
+:root {
+  --card-bg-summary-1: #B4C8D6;  /* Azul pastel grisáceo */
+  --card-bg-summary-2: #DCE5EB;  /* Azul cielo tenue */
+  --card-bg-summary-3: #EDEEEF;  /* Gris muy suave */
+  --card-bg-summary-4: #CAD9E3;  /* Azul neblina */
+  --table-header-bg: #DFD3CC;     /* Beige rosado suave para cabecera de tabla */
+  --text-dark: #404E5E;           /* Gris azulado oscuro */
+  --text-light: #F9EFE6;          /* Blanco roto */
+  --hover-bg: rgba(64, 78, 94, 0.1);  /* Fondo al pasar el mouse */
+  --transition-speed: 0.3s;       /* Velocidad de transición */
+}
+
+/* Ajustes globales */
+body {
+  background-color: var(--text-light);
+  font-family: 'Arial', sans-serif;
+}
+
+/* Tarjetas de resumen */
+.card-summary {
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.card-summary:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 20px;
+  font-size: 1.1rem;
+}
+
+.card-footer {
+  padding: 10px 20px;
+  background-color: transparent;
+}
+
+.card-footer a {
+  color: var(--text-dark);
+}
+
+.card-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Gráficas */
+.card-chart .card-header {
+  background-color: var(--table-header-bg);
+  color: var(--text-dark);
+  padding: 15px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-chart:hover {
+  background-color: var(--hover-bg);
+}
+
+.card-body canvas {
+  width: 100%;
+  height: 300px;
+}
+
+/* Tabla de datos */
+.card-table .card-header {
+  background-color: var(--table-header-bg);
+  color: var(--text-dark);
+  padding: 15px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-table:hover {
+  background-color: var(--hover-bg);
+}
+
+table.table-hover tbody tr:hover {
+  background-color: var(--hover-bg);
+  transition: background-color var(--transition-speed);
+}
+
+table.table-bordered {
+  border: 1px solid #ddd;
+}
+
+table th, table td {
+  padding: 15px;
+  text-align: center;
+}
+
+table th {
+  background-color: var(--table-header-bg);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .card-summary {
+      margin-bottom: 15px;
+  }
+
+  .card-body {
+      font-size: 1rem;
+  }
+
+  .card-header, .card-footer {
+      padding: 10px;
+  }
+
+  .row > .col-xl-3, .row > .col-md-6 {
+      margin-bottom: 20px;
+  }
+
+  .container-fluid {
+      padding: 10px;
+  }
+
+  h1 {
+      font-size: 1.5rem;
+  }
+}

@@ -1,0 +1,79 @@
+/* header.css */
+
+/* Variables de color pastel */
+:root {
+    /*--nav-bg: #8cacca;               /* Fondo del Navbar: azul pastel */
+    --nav-bg: #5D8EC6;
+    --nav-text: #ffffff;             /* Texto del Navbar: blanco rosado */
+    --sidebar-bg: #E7D9C9;           /* Fondo del Sidebar: blanco rosado muy suave */
+    --sidebar-text: #000000;         /* Texto del Sidebar: gris azulado oscuro */
+    --sidebar-footer-bg: #A0C4D6;    /* Fondo del Footer del Sidebar: azul grisáceo */
+    --sidebar-footer-text: #000000;  /* Texto del Footer: blanco */
+    --hover-bg: rgba(64, 78, 94, 0.1); /* Fondo al hacer hover: leve gris azulado */
+    --transition-speed: 0.3s;         /* Velocidad de transición */
+    --azul-lavanda: #C7D3E0;
+    --azul-helado: #A0C4D6;
+    --azul-celeste: #D6EAF0;
+    --beige-rosado: #F0E0D8;
+    --arena: #E7D9C9;
+    --blanco-hueso: #FFF9F0;
+    --azul-electrico: #6BB1F2;
+    --azul-cobalto: #5D8EC6;
+    --azul-ultramar: #7A9BFF;
+  }
+  
+  /* Top Navbar */
+  .sb-topnav.navbar {
+    background-color: var(--nav-bg) !important;
+    transition: background-color var(--transition-speed);
+  }
+  .sb-topnav.navbar .navbar-brand {
+    color: var(--nav-text) !important;
+    transition: color var(--transition-speed);
+  }
+  .sb-topnav.navbar .nav-link,
+  .sb-topnav.navbar .btn {
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+  }
+  .sb-topnav.navbar .nav-link:hover,
+  .sb-topnav.navbar .btn:hover {
+    background-color: var(--hover-bg);
+    transform: scale(1.05);
+  }
+  
+  /* Sidebar */
+  .sb-sidenav {
+    background-color: var(--sidebar-bg) !important;
+    color: var(--sidebar-text) !important;
+    transition: background-color var(--transition-speed);
+  }
+  .sb-sidenav .nav-link {
+    color: var(--sidebar-text) !important;
+    transition: background-color var(--transition-speed), padding var(--transition-speed);
+  }
+  .sb-sidenav .nav-link:hover {
+    background-color: var(--hover-bg);
+    padding-left: 1.5rem;
+  }
+  .sb-sidenav .sb-sidenav-menu-heading {
+    color: var(--sidebar-text) !important;
+    font-weight: 600;
+  }
+  
+  /* Sidebar Footer */
+  .sb-sidenav-footer {
+    background-color: var(--sidebar-footer-bg) !important;
+    color: var(--sidebar-footer-text) !important;
+  }
+  
+  /* Collapsible arrow rotation */
+  .sb-sidenav .sb-sidenav-collapse-arrow {
+    transition: transform var(--transition-speed);
+  }
+  .sb-sidenav .nav-link.collapsed .sb-sidenav-collapse-arrow {
+    transform: rotate(0deg);
+  }
+  .sb-sidenav .nav-link:not(.collapsed) .sb-sidenav-collapse-arrow {
+    transform: rotate(180deg);
+  }
+  

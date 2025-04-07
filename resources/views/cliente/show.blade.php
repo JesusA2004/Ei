@@ -1,46 +1,73 @@
 @extends('layouts.barraL')
 
-@section('template_title')
-    {{ $cliente->nombre ?? __('Show') . " " . __('Cliente') }}
-@endsection
-
 @section('panel-content')
-    <section class="content container-fluid">
-        <div class="row padding-1 p-1">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                        <span class="card-title">{{ __('Show') }} Cliente</span>
-                        <a class="btn btn-primary btn-sm" href="{{ route('clientes.index') }}">
-                            {{ __('Back') }}
+    <section class="container-fluid py-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-12">
+                <div class="card shadow-sm" style="border-color: #97ACBA;">
+                    <div class="card-header d-flex justify-content-between align-items-center" 
+                         style="background-color: #5D8EC6; color: #ffffff;">
+                        <h5 class="card-title mb-0">{{ __('Datos del cliente') }}</h5>
+                        <a class="btn btn-sm" 
+                           style="background-color: #DFD3CC; color: #404E5E; border: 1px solid #97ACBA;" 
+                           href="{{ route('clientes.index') }}">
+                            {{ __('Regresar') }}
                         </a>
                     </div>
-                    <div class="card-body bg-white">
-                        <div class="form-group">
-                            <strong>Nombre:</strong>
-                            {{ $cliente->nombre }}
+                    <div class="card-body" style="background-color: #FFF9F0;">
+                        <!-- Nombre -->
+                        <div class="row mb-2">
+                            <div class="col-sm-12 d-flex align-items-center">
+                                <img src="https://img.icons8.com/color/24/user.png" alt="Nombre" class="me-2">
+                                <strong class="me-1" style="color: #404E5E;">Nombre:</strong>
+                                <span>{{ $cliente->nombre }}</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <strong>Apellido:</strong>
-                            {{ $cliente->apellido }}
+
+                        <!-- Apellido -->
+                        <div class="row mb-2">
+                            <div class="col-sm-12 d-flex align-items-center">
+                                <img src="https://img.icons8.com/color/24/name.png" alt="Apellido" class="me-2">
+                                <strong class="me-1" style="color: #404E5E;">Apellido:</strong>
+                                <span>{{ $cliente->apellido }}</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <strong>Correo:</strong>
-                            {{ $cliente->correo }}
+
+                        <!-- Correo -->
+                        <div class="row mb-2">
+                            <div class="col-sm-12 d-flex align-items-center">
+                                <img src="https://img.icons8.com/color/24/new-post.png" alt="Correo" class="me-2">
+                                <strong class="me-1" style="color: #404E5E;">Correo:</strong>
+                                <span>{{ $cliente->correo }}</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <strong>Teléfono:</strong>
-                            {{ $cliente->telefono }}
+
+                        <!-- Teléfono -->
+                        <div class="row mb-2">
+                            <div class="col-sm-12 d-flex align-items-center">
+                                <img src="https://img.icons8.com/color/24/phone.png" alt="Teléfono" class="me-2">
+                                <strong class="me-1" style="color: #404E5E;">Teléfono:</strong>
+                                <span>{{ $cliente->telefono }}</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <strong>Dirección:</strong>
-                            {{ $cliente->direccion }}
+
+                        <!-- Dirección -->
+                        <div class="row mb-2">
+                            <div class="col-sm-12 d-flex align-items-center">
+                                <img src="https://img.icons8.com/color/24/marker.png" alt="Dirección" class="me-2">
+                                <strong class="me-1" style="color: #404E5E;">Dirección:</strong>
+                                <span>{{ $cliente->direccion }}</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <strong>Usuario:</strong>
-                            {{ $cliente->usuario }}
+
+                        <!-- Usuario -->
+                        <div class="row">
+                            <div class="col-sm-12 d-flex align-items-center">
+                                <img src="https://img.icons8.com/color/24/administrator-male.png" alt="Usuario" class="me-2">
+                                <strong class="me-1" style="color: #404E5E;">Usuario:</strong>
+                                <span>{{ $cliente->usuario }}</span>
+                            </div>
                         </div>
-                        <!-- Por seguridad, usualmente no se muestra la contraseña -->
                     </div>
                 </div>
             </div>
