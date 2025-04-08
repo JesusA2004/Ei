@@ -45,7 +45,7 @@ class ProductoController extends Controller
         Producto::create($data);
 
         return Redirect::route('productos.index')
-            ->with('success', 'Producto created successfully.');
+            ->with('success', 'Producto agregado correctamente.');
     }
 
 
@@ -69,22 +69,32 @@ class ProductoController extends Controller
         return view('producto.edit', compact('producto'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(ProductoRequest $request, Producto $producto): RedirectResponse
     {
-        $producto->update($request->validated());
+        $data = $request->validated();
+
+        // Si se envía una nueva foto, se procesa:
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            // Guarda la nueva foto en storage/app/public/productos
+            $file->storeAs('public/productos', $filename);
+
+            // (Opcional) Elimina la imagen antigua si existiera y ya no es necesaria:
+            if ($producto->foto) {
+                \Storage::delete('public/productos/' . $producto->foto);
+            }
+
+            // Actualiza el dato 'foto' con el nuevo nombre de archivo
+            $data['foto'] = $filename;
+        }
+
+        // Actualiza el producto con los datos (incluyendo la nueva foto si se envió)
+        $producto->update($data);
 
         return Redirect::route('productos.index')
-            ->with('success', 'Producto updated successfully');
+            ->with('success', 'Producto actualizado correctamente');
     }
 
-    public function destroy($id): RedirectResponse
-    {
-        Producto::find($id)->delete();
-
-        return Redirect::route('productos.index')
-            ->with('success', 'Producto deleted successfully');
-    }
 }
