@@ -131,16 +131,21 @@ class CarritoController extends Controller
      * - cantidad: la cantidad elegida.
      */
     protected function formatProducts(array $products): array
-    {
-        return array_map(function ($product) {
-            return [
-                'id_producto'     => new ObjectId($product['id_producto']),
-                'nombre'          => $product['nombre'],
-                'precio_unitario' => (float) $product['precio_unitario'],
-                'cantidad'        => (int) $product['cantidad']
-            ];
-        }, $products);
-    }
+{
+    return array_map(function ($product) {
+        // Verificar si 'id_producto' es un array y extraer el identificador si es necesario.
+        $id = $product['id_producto'];
+        if (is_array($id) && isset($id['$oid'])) {
+            $id = $id['$oid'];
+        }
+        return [
+            'id_producto'     => new ObjectId($id),
+            'nombre'          => $product['nombre'],
+            'precio_unitario' => (float) $product['precio_unitario'],
+            'cantidad'        => (int) $product['cantidad']
+        ];
+    }, $products);
+}
 
     /**
      * Calcular total del carrito.

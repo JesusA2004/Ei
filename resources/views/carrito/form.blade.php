@@ -1,6 +1,4 @@
-<!-- Espacio adicional para separar el panel del header -->
-<br>
-<div class="row p-1">
+<div class="row p-1 mt-4">
     <div class="col-12">
         <!-- Campos ocultos -->
         <input type="hidden" name="sesion_id" id="sesion_id" value="{{ Auth::id() }}">
@@ -40,6 +38,22 @@
                 style="background-color: #5D8EC6; color: #ffffff; border-color: #5D8EC6;">
             {{ __('Enviar') }}
         </button>
+        <a href="{{ url()->previous() }}" 
+            class="btn btn-sm"
+            style="
+                background-color: #C7D3E0;       /* azul-lavanda */
+                color: #404E5E;                  /* azul-oscuro */
+                border: 1px solid #A0C4D6;       /* azul-helado */
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                font-weight: 500;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                transition: all 0.2s ease-in-out;
+            "
+            onmouseover="this.style.backgroundColor='#B5D2E1'"
+            onmouseout="this.style.backgroundColor='#C7D3E0'">
+            ← Volver
+        </a>
     </div>
 </div>
 

@@ -5,24 +5,29 @@
 @endsection
 
 @section('panel-content')
-<section class="content container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card border border-secondary">
-                <div class="card-header d-flex justify-content-between align-items-center bg-light">
-                    <h5 class="mb-0 text-dark">{{ __('Detalles del Carrito') }}</h5>
-                    <a class="btn btn-sm btn-primary" href="{{ route('carritos.index') }}">
-                        {{ __('Volver') }}
+<section class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-11 col-lg-12">
+            <div class="card shadow-sm" style="border-color: #97ACBA;">
+                <div class="card-header d-flex justify-content-between align-items-center" 
+                     style="background-color: #5D8EC6; color: #ffffff;">
+                    <h5 class="mb-0">{{ __('Detalles del Carrito') }}</h5>
+                    <a class="btn btn-sm"
+                       style="background-color: #DFD3CC; color: #404E5E; border: 1px solid #97ACBA;"
+                       href="{{ route('carritos.index') }}">
+                        {{ __('Regresar') }}
                     </a>
                 </div>
-                <div class="card-body bg-white">
+                <div class="card-body" style="background-color: #FFF9F0;">
                     
                     {{-- Cliente --}}
                     <div class="mb-4">
-                        <strong class="text-dark">Cliente:</strong>
-                        @php $cliente = $carrito->cliente_id ? App\Models\Cliente::find($carrito->cliente_id) : null; @endphp
+                        <strong style="color: #404E5E;">Cliente:</strong>
+                        @php 
+                            $cliente = $carrito->cliente_id ? App\Models\Cliente::find($carrito->cliente_id) : null; 
+                        @endphp
                         @if($cliente)
-                            <span class="text-dark">{{ $cliente->nombre }} {{ $cliente->apellido }}</span>
+                            <span style="color: #404E5E;">{{ $cliente->nombre }} {{ $cliente->apellido }}</span>
                         @elseif($carrito->cliente_id)
                             <span class="text-danger">Cliente no encontrado</span>
                         @else
@@ -32,13 +37,15 @@
 
                     {{-- Productos --}}
                     <div class="mb-4">
-                        <strong class="text-dark">Productos:</strong>
+                        <strong style="color: #404E5E;">Productos:</strong>
                         @php
-                            $productos = is_string($carrito->productos) ? json_decode($carrito->productos, true) : [];
+                            $productos = is_array($carrito->productos) 
+                                ? $carrito->productos 
+                                : json_decode($carrito->productos, true);
                         @endphp
 
                         @if(!empty($productos))
-                            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 mt-2">
                                 @foreach($productos as $producto)
                                     @php
                                         $productoDB = App\Models\Producto::find($producto['id_producto']);
@@ -50,22 +57,22 @@
                                         <div class="card h-100 shadow-sm border border-light">
                                             @if($productoDB && $productoDB->foto)
                                                 <img src="{{ asset('storage/productos/' . $productoDB->foto) }}"
-                                                     class="card-img-top"
+                                                     class="card-img-top img-fluid rounded-top"
                                                      alt="{{ $productoDB->nombre }}"
-                                                     style="height: 180px; object-fit: cover;">
+                                                     style="height: 140px; object-fit: cover;">
                                             @else
-                                                <div class="bg-secondary text-white text-center d-flex align-items-center justify-content-center" style="height: 180px;">
+                                                <div class="bg-secondary text-white text-center d-flex align-items-center justify-content-center rounded-top" style="height: 140px;">
                                                     Sin imagen
                                                 </div>
                                             @endif
-                                            <div class="card-body">
-                                                <h5 class="card-title text-dark">
+                                            <div class="card-body p-2" style="background-color: #F9EFE6;">
+                                                <h6 class="card-title mb-1" style="color: #404E5E;">
                                                     {{ $productoDB ? $productoDB->nombre : 'Producto eliminado' }}
-                                                </h5>
-                                                <ul class="list-unstyled text-dark">
-                                                    <li><strong>Cantidad:</strong> {{ $cantidad }}</li>
-                                                    <li><strong>Precio unitario:</strong> ${{ number_format($precio, 2) }}</li>
-                                                    <li><strong>Subtotal:</strong> ${{ number_format($subtotal, 2) }}</li>
+                                                </h6>
+                                                <ul class="list-unstyled small mb-0" style="color: #404E5E;">
+                                                    <li><strong>Cant:</strong> {{ $cantidad }}</li>
+                                                    <li><strong>P.U.:</strong> ${{ number_format($precio, 2) }}</li>
+                                                    <li><strong>Sub:</strong> ${{ number_format($subtotal, 2) }}</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -79,10 +86,10 @@
 
                     {{-- Total --}}
                     <div class="border-top pt-3 mt-3">
-                        <h4 class="text-end text-dark">
+                        <h5 class="text-end" style="color: #404E5E;">
                             <strong>Total General:</strong>
                             ${{ number_format($carrito->total, 2) }}
-                        </h4>
+                        </h5>
                     </div>
 
                 </div>
