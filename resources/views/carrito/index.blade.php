@@ -48,12 +48,9 @@
                                             @endif
                                         </td>
                                         <td style="color: #404E5E;">
-                                            @if($carrito->productos && is_string($carrito->productos))
-                                                @php
-                                                    $productosCarrito = json_decode($carrito->productos, true);
-                                                @endphp
+                                            @if(is_array($carrito->productos) && count($carrito->productos) > 0)
                                                 <ul class="list-unstyled mb-0">
-                                                    @foreach($productosCarrito as $producto)
+                                                    @foreach($carrito->productos as $producto)
                                                         <li>
                                                             {{ $producto['nombre'] ?? 'Producto desconocido' }}
                                                             (Cantidad: {{ $producto['cantidad'] ?? 0 }})

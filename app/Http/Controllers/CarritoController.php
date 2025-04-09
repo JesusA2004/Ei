@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Carrito;
 use App\Models\Producto;
 use App\Models\Cliente;
-use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\CarritoRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use MongoDB\BSON\ObjectId;
@@ -20,8 +18,9 @@ class CarritoController extends Controller
      */
     public function index(Request $request): View
     {
-        $carritos = Carrito::with(['user', 'cliente'])->paginate();
-
+        // Se carga la relación con el cliente
+        $carritos = Carrito::with('cliente')->paginate();
+        
         return view('carrito.index', [
             'carritos' => $carritos,
             'i' => ($request->input('page', 1) - 1) * $carritos->perPage()
@@ -33,14 +32,10 @@ class CarritoController extends Controller
      */
     public function create(): View
     {
-        $currentUser = Auth::user();
-
         return view('carrito.create', [
-            'carrito' => new Carrito(),
+            'carrito'   => new Carrito(),
             'productos' => Producto::all(),
-            'clientes' => Cliente::all(),
-            'users' => User::all(),
-            'isAdmin' => $currentUser instanceof User // Verifica si es usuario admin
+            'clientes'  => Cliente::all()
         ]);
     }
 
@@ -50,17 +45,15 @@ class CarritoController extends Controller
     public function store(CarritoRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $currentUser = Auth::user();
 
-        // Asignar relación según tipo de usuario
-        if ($currentUser instanceof User) { // Usuario admin
-            $data['user_id'] = $currentUser->id;
-        } else { // Cliente
-            $data['cliente_id'] = $currentUser->id;
+        // Decodificar el JSON recibido en 'productos'
+        $productosDecoded = json_decode($data['productos'], true);
+        if (!is_array($productosDecoded) || count($productosDecoded) === 0) {
+            return redirect()->back()->withErrors(['productos' => 'Debe agregar al menos un producto al carrito.']);
         }
-
-        // Convertir productos a formato correcto
-        $data['productos'] = $this->formatProducts($data['productos']);
+        
+        // Convertir productos al formato correcto y calcular total
+        $data['productos'] = $this->formatProducts($productosDecoded);
         $data['total'] = $this->calculateTotal($data['productos']);
 
         Carrito::create($data);
@@ -74,7 +67,7 @@ class CarritoController extends Controller
      */
     public function show($id): View
     {
-        $carrito = Carrito::with(['user', 'cliente', 'productos'])->findOrFail($id);
+        $carrito = Carrito::with('cliente')->findOrFail($id);
 
         return view('carrito.show', compact('carrito'));
     }
@@ -85,14 +78,11 @@ class CarritoController extends Controller
     public function edit($id): View
     {
         $carrito = Carrito::findOrFail($id);
-        $currentUser = Auth::user();
 
         return view('carrito.edit', [
-            'carrito' => $carrito,
+            'carrito'   => $carrito,
             'productos' => Producto::all(),
-            'clientes' => Cliente::all(),
-            'users' => User::all(),
-            'isAdmin' => $currentUser instanceof User
+            'clientes'  => Cliente::all()
         ]);
     }
 
@@ -102,19 +92,15 @@ class CarritoController extends Controller
     public function update(CarritoRequest $request, Carrito $carrito): RedirectResponse
     {
         $data = $request->validated();
-        $currentUser = Auth::user();
 
-        // Mantener la relación original si no se cambia
-        if (!isset($data['user_id']) && !isset($data['cliente_id'])) {
-            if ($currentUser instanceof User) {
-                $data['user_id'] = $currentUser->id;
-            } else {
-                $data['cliente_id'] = $currentUser->id;
-            }
+        // Decodificar el JSON recibido en 'productos'
+        $productosDecoded = json_decode($data['productos'], true);
+        if (!is_array($productosDecoded) || count($productosDecoded) === 0) {
+            return redirect()->back()->withErrors(['productos' => 'Debe agregar al menos un producto al carrito.']);
         }
-
-        // Actualizar productos y total
-        $data['productos'] = $this->formatProducts($data['productos'] ?? []);
+        
+        // Actualizar productos y recalcular total
+        $data['productos'] = $this->formatProducts($productosDecoded);
         $data['total'] = $this->calculateTotal($data['productos']);
 
         $carrito->update($data);
@@ -136,22 +122,28 @@ class CarritoController extends Controller
     }
 
     /**
-     * Formatear productos para almacenamiento
+     * Formatear productos para almacenamiento.
+     *
+     * Se espera que cada producto tenga:
+     * - id_producto: el identificador del producto (cadena).
+     * - nombre: el nombre del producto.
+     * - precio_unitario: el precio unitario.
+     * - cantidad: la cantidad elegida.
      */
     protected function formatProducts(array $products): array
     {
         return array_map(function ($product) {
             return [
-                'id_producto' => new ObjectId($product['id']),
-                'nombre' => $product['name'],
-                'precio_unitario' => (float) $product['price'],
-                'cantidad' => (int) $product['quantity']
+                'id_producto'     => new ObjectId($product['id_producto']),
+                'nombre'          => $product['nombre'],
+                'precio_unitario' => (float) $product['precio_unitario'],
+                'cantidad'        => (int) $product['cantidad']
             ];
         }, $products);
     }
 
     /**
-     * Calcular total del carrito
+     * Calcular total del carrito.
      */
     protected function calculateTotal(array $products): float
     {

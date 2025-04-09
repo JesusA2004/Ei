@@ -1,3 +1,5 @@
+<!-- Espacio adicional para separar el panel del header -->
+<br>
 <div class="row p-1">
     <div class="col-12">
         <!-- Campos ocultos -->
@@ -16,7 +18,7 @@
             </select>
         </div>
 
-        <!-- Lista de productos -->
+        <!-- Lista de productos (incluyendo el listado parcial de productos) -->
         @include('producto._list', ['productos' => $productos])
 
         <!-- Sección de productos agregados y total -->
@@ -45,14 +47,14 @@
 <script>
     document.addEventListener('DOMContentLoaded', function(){
         let productosAgregados = [];
-        
+
         const calcularTotal = () => {
             let total = productosAgregados.reduce((acc, producto) => {
                 const precio = Number(producto.precio_unitario);
                 const cantidad = Number(producto.cantidad);
                 return acc + (precio * cantidad);
             }, 0);
-            
+
             const totalRedondeado = Math.round(total * 100) / 100;
             document.getElementById('total-carrito').textContent = `$${totalRedondeado.toFixed(2)}`;
             document.getElementById('total-hidden').value = totalRedondeado.toFixed(2);
@@ -61,16 +63,16 @@
         const actualizarLista = () => {
             const lista = document.getElementById('lista-productos-agregados');
             lista.innerHTML = '';
-            
+
             productosAgregados.forEach((item, index) => {
                 const precio = Number(item.precio_unitario);
                 const cantidad = Number(item.cantidad);
                 const subtotal = precio * cantidad;
-                
+
                 lista.innerHTML += `
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <div>
-                            ${item.nombre} 
+                            ${item.nombre}
                             <small class="text-muted">(Cantidad: ${cantidad} | $${precio.toFixed(2)} c/u)</small>
                         </div>
                         <div>
@@ -82,38 +84,53 @@
                     </div>
                 `;
             });
-            
+
             document.getElementById('productos').value = JSON.stringify(productosAgregados);
             calcularTotal();
         };
-        
+
+        // Agregar producto desde la lista
         document.querySelectorAll('.agregar-producto').forEach(btn => {
             btn.addEventListener('click', function(){
                 const id = this.getAttribute('data-id');
                 const nombre = this.getAttribute('data-nombre');
                 const precio = parseFloat(this.getAttribute('data-precio')).toFixed(2);
-                
+
                 const cantidadInput = prompt('Ingrese la cantidad', 1);
                 const cantidad = parseInt(cantidadInput);
-                
+
                 if(cantidad && cantidad > 0 && !isNaN(cantidad)) {
-                    productosAgregados.push({
-                        id_producto: id,
-                        nombre: nombre,
-                        precio_unitario: Number(precio),
-                        cantidad: cantidad
-                    });
+                    // Si el producto ya existe, se actualiza la cantidad
+                    const indiceExistente = productosAgregados.findIndex(item => item.id_producto === id);
+                    if (indiceExistente >= 0) {
+                        productosAgregados[indiceExistente].cantidad += cantidad;
+                    } else {
+                        productosAgregados.push({
+                            id_producto: id,
+                            nombre: nombre,
+                            precio_unitario: Number(precio),
+                            cantidad: cantidad
+                        });
+                    }
                     actualizarLista();
                 }
             });
         });
-        
+
         window.eliminarProducto = function(index) {
             if(confirm('¿Estás seguro de eliminar este producto del carrito?')) {
                 productosAgregados.splice(index, 1);
                 actualizarLista();
             }
         }
+
+        // Validación antes de enviar el formulario
+        document.querySelector('form').addEventListener('submit', function(e) {
+            if(productosAgregados.length === 0) {
+                e.preventDefault();
+                alert('Debe agregar al menos un producto al carrito.');
+            }
+        });
     });
 </script>
 @endpush

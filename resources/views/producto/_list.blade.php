@@ -31,7 +31,7 @@
                     <td style="color: #404E5E;">{{ $producto->cantidad }}</td>
                     <td style="color: #404E5E;">{{ $producto->categoria }}</td>
                     <td>
-                        <button type="button" class="btn btn-sm"
+                        <button type="button" class="btn btn-sm agregar-producto"
                                 style="background-color: #5D8EC6; color: #ffffff; border-color: #5D8EC6;"
                                 data-id="{{ $producto->_id }}"
                                 data-nombre="{{ $producto->nombre }}"
