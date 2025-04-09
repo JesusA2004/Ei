@@ -33,8 +33,9 @@
             <div class="mb-3">
                 <label for="telefono" class="form-label" style="color: #404E5E;">Teléfono</label>
                 <input type="text" name="telefono" id="telefono" class="form-control" 
-                       style="background-color: #FFF9F0; border-color: #97ACBA;"
-                       value="{{ old('telefono', $cliente->telefono ?? '') }}">
+                style="background-color: #FFF9F0; border-color: #97ACBA;"
+                value="{{ old('telefono', $cliente->telefono ?? '') }}"
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57">
             </div>
         </div>
     </div>

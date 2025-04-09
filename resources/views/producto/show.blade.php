@@ -7,69 +7,90 @@
 @section('panel-content')
     <section class="content container-fluid">
         <div class="row p-3">
-            <div class="col-12 col-md-10 col-lg-10 mx-auto">
+            <div class="col-12 col-md-10 col-lg-8 mx-auto">
                 <div class="card shadow-sm" style="border: 1px solid #97ACBA;">
-                    <!-- Encabezado consistente con botones y colores -->
-                    <div class="card-header d-flex justify-content-between align-items-center" 
-                         style="background-color: #FFF9F0; border: 1px solid #97ACBA;">
-                        <h5 class="card-title mb-0" style="color: #404E5E; font-weight: bold;">{{ __('Mostrar') }} Producto</h5>
+                    <!-- Encabezado -->
+                    <div class="card-header d-flex flex-column flex-md-row justify-content-between align-items-center" 
+                         style="background-color: #FFF9F0; border-bottom: 1px solid #97ACBA; padding: 1rem 1.5rem;">
+                        <h5 class="card-title mb-3 mb-md-0" style="color: #404E5E; font-weight: 600; font-size: 1.25rem;">
+                            {{ __('Mostrar') }} Producto
+                        </h5>
                         <a class="btn btn-sm" 
-                           style="background-color: #5D8EC6; color: #ffffff; border-color: #5D8EC6;" 
+                           style="background-color: #5D8EC6; color: #ffffff; border-color: #5D8EC6; padding: 0.375rem 0.75rem;" 
                            href="{{ route('productos.index') }}">
                             {{ __('Regresar') }}
                         </a>
                     </div>
-                    <div class="card-body" style="background-color: #FFF9F0;">
-                        <div class="row mb-2">
-                            <div class="col-md-4 text-end" style="color: #404E5E; font-weight: bold;">
-                                Nombre:
+
+                    <!-- Cuerpo del card -->
+                    <div class="card-body" style="background-color: #FFF9F0; padding: 1.5rem;">
+                        <!-- Grupo de campos responsivos -->
+                        <div class="d-flex flex-column gap-3">
+                            <!-- Nombre -->
+                            <div class="d-flex flex-column flex-md-row align-items-start">
+                                <div class="flex-shrink-0 me-md-4" style="width: 140px;">
+                                    <span style="color: #404E5E; font-weight: 500;">Nombre:</span>
+                                </div>
+                                <div class="flex-grow-1 mt-1 mt-md-0">
+                                    {{ $producto->nombre }}
+                                </div>
                             </div>
-                            <div class="col-md-8">
-                                {{ $producto->nombre }}
+
+                            <!-- Descripción -->
+                            <div class="d-flex flex-column flex-md-row align-items-start">
+                                <div class="flex-shrink-0 me-md-4" style="width: 140px;">
+                                    <span style="color: #404E5E; font-weight: 500;">Descripción:</span>
+                                </div>
+                                <div class="flex-grow-1 mt-1 mt-md-0">
+                                    {{ $producto->descripcion }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-4 text-end" style="color: #404E5E; font-weight: bold;">
-                                Descripción:
+
+                            <!-- Precio -->
+                            <div class="d-flex flex-column flex-md-row align-items-start">
+                                <div class="flex-shrink-0 me-md-4" style="width: 140px;">
+                                    <span style="color: #404E5E; font-weight: 500;">Precio:</span>
+                                </div>
+                                <div class="flex-grow-1 mt-1 mt-md-0">
+                                    ${{ number_format($producto->precio, 2) }}
+                                </div>
                             </div>
-                            <div class="col-md-8">
-                                {{ $producto->descripcion }}
+
+                            <!-- Cantidad -->
+                            <div class="d-flex flex-column flex-md-row align-items-start">
+                                <div class="flex-shrink-0 me-md-4" style="width: 140px;">
+                                    <span style="color: #404E5E; font-weight: 500;">Cantidad:</span>
+                                </div>
+                                <div class="flex-grow-1 mt-1 mt-md-0">
+                                    {{ $producto->cantidad }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-4 text-end" style="color: #404E5E; font-weight: bold;">
-                                Precio:
+
+                            <!-- Categoría -->
+                            <div class="d-flex flex-column flex-md-row align-items-start">
+                                <div class="flex-shrink-0 me-md-4" style="width: 140px;">
+                                    <span style="color: #404E5E; font-weight: 500;">Categoría:</span>
+                                </div>
+                                <div class="flex-grow-1 mt-1 mt-md-0">
+                                    {{ $producto->categoria }}
+                                </div>
                             </div>
-                            <div class="col-md-8">
-                                ${{ number_format($producto->precio, 2) }}
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-4 text-end" style="color: #404E5E; font-weight: bold;">
-                                Cantidad:
-                            </div>
-                            <div class="col-md-8">
-                                {{ $producto->cantidad }}
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-4 text-end" style="color: #404E5E; font-weight: bold;">
-                                Categoría:
-                            </div>
-                            <div class="col-md-8">
-                                {{ $producto->categoria }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 text-end" style="color: #404E5E; font-weight: bold;">
-                                Foto:
-                            </div>
-                            <div class="col-md-8">
-                                @if($producto->foto)
-                                    <img src="{{ asset('storage/productos/' . $producto->foto) }}" alt="{{ $producto->nombre }}" style="max-width:200px;" class="img-thumbnail">
-                                @else
-                                    N/A
-                                @endif
+
+                            <!-- Foto -->
+                            <div class="d-flex flex-column flex-md-row align-items-center">
+                                <div class="flex-shrink-0 me-md-4" style="width: 140px;">
+                                    <span style="color: #404E5E; font-weight: 500;">Foto:</span>
+                                </div>
+                                <div class="flex-grow-1 mt-1 mt-md-0">
+                                    @if($producto->foto)
+                                        <img src="{{ asset('storage/productos/' . $producto->foto) }}" 
+                                             alt="{{ $producto->nombre }}" 
+                                             style="max-width: 100%; height: auto; max-height: 300px;" 
+                                             class="img-fluid rounded border">
+                                    @else
+                                        <span class="text-muted">N/A</span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>

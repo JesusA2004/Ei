@@ -1,9 +1,5 @@
 @extends('layouts.barraL')
 
-@section('template_title')
-    Crear Cliente
-@endsection
-
 @section('panel-content')
     <div class="container-fluid">
         <div class="row p-3">
@@ -12,7 +8,7 @@
                     <!-- Encabezado con título -->
                     <div class="card-header" style="background-color: #FFF9F0; border: 1px solid #97ACBA;">
                         <div class="d-flex justify-content-between align-items-center">
-                            <span id="card_title" style="color: #404E5E; font-weight: bold;">{{ __('Crear Cliente') }}</span>
+                            <span id="card_title" style="color: #404E5E; font-weight: bold;">{{ __('Agregar cliente') }}</span>
                         </div>
                     </div>
 
