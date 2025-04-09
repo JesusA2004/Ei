@@ -1,5 +1,5 @@
-<div class="row padding-1 p-1">
-    <div class="col-md-12">
+<div class="row p-1">
+    <div class="col-12">
         <!-- Campos ocultos -->
         <input type="hidden" name="sesion_id" id="sesion_id" value="{{ Auth::id() }}">
         <input type="hidden" name="productos" id="productos" value="[]">
@@ -7,7 +7,7 @@
 
         <!-- Seleccionar cliente -->
         <div class="mb-3">
-            <label for="cliente_id" class="form-label">Cliente</label>
+            <label for="cliente_id" class="form-label" style="color: #404E5E;">Cliente</label>
             <select name="cliente_id" id="cliente_id" class="form-control" required>
                 <option value="">Seleccione un cliente</option>
                 @foreach($clientes as $cliente)
@@ -20,12 +20,12 @@
         @include('producto._list', ['productos' => $productos])
 
         <!-- Sección de productos agregados y total -->
-        <div class="card mt-4">
+        <div class="card mt-4" style="border: 1px solid #97ACBA; background-color: #FFF9F0;">
             <div class="card-body">
-                <h5 class="card-title">Resumen del Carrito</h5>
+                <h5 class="card-title" style="color: #404E5E;">Resumen del Carrito</h5>
                 <div id="lista-productos-agregados" class="mb-3"></div>
                 <div class="border-top pt-3">
-                    <h5 class="text-end">
+                    <h5 class="text-end" style="color: #404E5E;">
                         <strong>Total: </strong>
                         <span id="total-carrito">$0.00</span>
                     </h5>
@@ -33,8 +33,11 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12 mt-4">
-        <button type="submit" class="btn btn-primary">{{ __('Enviar') }}</button>
+    <div class="col-12 mt-4">
+        <button type="submit" class="btn btn-primary" 
+                style="background-color: #5D8EC6; color: #ffffff; border-color: #5D8EC6;">
+            {{ __('Enviar') }}
+        </button>
     </div>
 </div>
 
@@ -44,17 +47,13 @@
         let productosAgregados = [];
         
         const calcularTotal = () => {
-            // Cálculo preciso con decimales
             let total = productosAgregados.reduce((acc, producto) => {
                 const precio = Number(producto.precio_unitario);
                 const cantidad = Number(producto.cantidad);
                 return acc + (precio * cantidad);
             }, 0);
             
-            // Redondear a 2 decimales correctamente
             const totalRedondeado = Math.round(total * 100) / 100;
-            
-            // Actualizar vistas
             document.getElementById('total-carrito').textContent = `$${totalRedondeado.toFixed(2)}`;
             document.getElementById('total-hidden').value = totalRedondeado.toFixed(2);
         };
@@ -101,7 +100,7 @@
                     productosAgregados.push({
                         id_producto: id,
                         nombre: nombre,
-                        precio_unitario: Number(precio), // Convertir a número
+                        precio_unitario: Number(precio),
                         cantidad: cantidad
                     });
                     actualizarLista();
