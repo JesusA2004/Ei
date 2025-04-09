@@ -64,16 +64,6 @@
             </div>
         </div>
 
-        <div class="col-xl-6">
-            <div class="card card-chart shadow-sm border-0">
-                <div class="card-header fw-semibold">
-                    <i class="fas fa-chart-bar me-2"></i> Categorías más vendidas
-                </div>
-                <div class="card-body">
-                    <canvas id="myBarChart" width="100%" height="40"></canvas>
-                </div>
-            </div>
-        </div>
     </div>
 
 </div>

@@ -13,9 +13,6 @@
                 <i class="fas fa-user fa-fw"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="#">Configuraciones</a></li>
-                <li><a class="dropdown-item" href="#">Activity Log</a></li>
-                <li><hr class="dropdown-divider" /></li>
                 <li>
                     <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Cerrar sesión
@@ -49,61 +46,36 @@
                     <a class="nav-link" style="color: var(--sidebar-text);" href="{{ url('/carritos') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>Ventas
                     </a>
-                    <a class="nav-link" style="color: var(--sidebar-text);" href="{{ url('/pedidos') }}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-truck"></i></div>Envios
-                    </a>
+                    
                     <a class="nav-link" style="color: var(--sidebar-text);" href="{{ url('/products') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>Api FakeStore
                     </a>
 
-                    <!-- Perfil -->
-                    <div class="sb-sidenav-menu-heading" style="color: var(--sidebar-text);">Perfil</div>
-                    <a class="nav-link collapsed" style="color: var(--sidebar-text);" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts">
+                    <!-- Sección Perfil -->
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePerfil" aria-expanded="false" aria-controls="collapsePerfil" style="color: var(--sidebar-text);">
                         <div class="sb-nav-link-icon"><i class="fas fa-user-cog"></i></div>
-                        Sesión
+                        Perfil
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapseLayouts">
+                    <div class="collapse" id="collapsePerfil" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" style="color: var(--sidebar-text);" href="#">Cambiar contraseña</a>
-                            <a class="nav-link" style="color: var(--sidebar-text);" href="#">Cerrar sesión</a>
-                        </nav>
-                    </div>
-
-                    <!-- Reportes -->
-                    <a class="nav-link collapsed" style="color: var(--sidebar-text);" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages">
-                        <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
-                        Reportes
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapsePages">
-                        <nav class="sb-sidenav-menu-nested nav accordion">
-                            <a class="nav-link collapsed" style="color: var(--sidebar-text);" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth">
-                                Ventas
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            <!-- Cambiar contraseña -->
+                            <a class="nav-link" style="color: var(--sidebar-text);" href="{{ url('/password/reset') }}">
+                                Cambiar contraseña
                             </a>
-                            <div class="collapse" id="pagesCollapseAuth">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" style="color: var(--sidebar-text);" href="#">Diarias</a>
-                                    <a class="nav-link" style="color: var(--sidebar-text);" href="#">Semanales</a>
-                                    <a class="nav-link" style="color: var(--sidebar-text);" href="#">Mensuales</a>
-                                </nav>
-                            </div>
+
+                            <!-- Cerrar sesión -->
+                            <form method="POST" action="{{ route('logout') }}" id="logout-form-sidebar">
+                                @csrf
+                                <a class="nav-link" style="color: var(--sidebar-text); cursor: pointer;"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form-sidebar').submit();">
+                                    Cerrar sesión
+                                </a>
+                            </form>
                         </nav>
                     </div>
-
-                    <!-- Adicionales -->
-                    <div class="sb-sidenav-menu-heading" style="color: var(--sidebar-text);">Adicionales</div>
-                    <a class="nav-link" style="color: var(--sidebar-text);" href="#">
-                        <div class="sb-nav-link-icon"><i class="fas fa-database"></i></div>
-                        Respaldo de base de datos
-                    </a>
-                    <a class="nav-link" style="color: var(--sidebar-text);" href="#">
-                        <div class="sb-nav-link-icon"><i class="fas fa-history"></i></div>
-                        Restauración de base de datos
-                    </a>
-                </div>
             </div>
+
             <!-- Footer del Sidebar -->
             <div class="sb-sidenav-footer" style="background-color: var(--sidebar-footer-bg); color: var(--sidebar-footer-text);">
                 <div class="small">Sesión iniciada como:</div>
